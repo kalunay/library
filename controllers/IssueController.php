@@ -69,11 +69,11 @@ class IssueController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $book = Book::findOne((Yii::$app->request->post('Issue')['book_id']));
-            $book->status = 1;
-            $book->save();
-
             if($model->save()){
+                $book = Book::findOne((Yii::$app->request->post('Issue')['book_id']));
+                $book->status = 1;
+                $book->save();
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
 
@@ -93,10 +93,23 @@ class IssueController extends Controller
      */
     public function actionUpdate($id)
     {
+
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model = new Issue();
+            $model->load(Yii::$app->request->post());
+
+            if($model->save()){
+
+                $book = Book::findOne((Yii::$app->request->post('Issue')['book_id']));
+                $book->status = 0;
+                $book->save();
+
+                return $this->redirect(['index']);
+            }
+
         }
 
         return $this->render('update', [

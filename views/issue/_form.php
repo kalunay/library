@@ -15,37 +15,28 @@ use kartik\date\DatePicker;
 
     <?= $form->field($model, 'date1')->widget(DatePicker::classname(), [
                         'type' => DatePicker::TYPE_INPUT,
-                        'value' => date('d-M-Y'),
+                        'value' => date('Y-m-d'),
                         'pluginOptions' => [
                             'autoclose' => true,
-                            'format' => 'dd-M-yyyy'
+                            'format' => 'yyyy-mm-dd'
                         ]
-                    ])->textInput(['value' => (!empty($model->date1) ? $model->date1 : date('d-M-Y'))]) ?>
+                    ])->textInput(['value' => (!empty($model->date1) ? $model->date1 : date('Y-m-d'))]) ?>
 
     <?= $form->field($model, 'date2')->widget(DatePicker::classname(), [
                         'type' => DatePicker::TYPE_INPUT,
-                        'value' => date('d-M-Y'),
+                        'value' => date('Y-m-d'),
                         'pluginOptions' => [
                             'autoclose' => true,
-                            'format' => 'dd-M-yyyy'
+                            'format' => 'yyyy-mm-dd'
                         ]
-                    ])->textInput(['value' => (!empty($model->date2) ? $model->date2 : date('d-M-Y'))]) ?>
+                    ])->textInput(['value' => (!empty($model->date2) ? $model->date2 : date('Y-m-d'))]) ?>
 
-    <?php if(Yii::$app->request->get('id')): ?>
-
-        <div class="form-group">
-            <label>Книга</label>
-            <?= Html::tag('p', Html::encode($model->book->name)) ?>
-        </div>
-
-    <?php else: ?>
-        <?= $form->field($model, 'book_id')->dropDownList(
-            $model->books,
-            [
-                'prompt' => 'Выберите книгу'
-            ],
-        ) ?>
-    <?php endif; ?>
+    <?= $form->field($model, 'book_id')->dropDownList(
+        $model->books,
+        [
+            'prompt' => 'Выберите книгу'
+        ],
+    ) ?>
 
     <?= $form->field($model, 'client_id')->dropDownList(
         $model->clients,

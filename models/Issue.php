@@ -34,8 +34,8 @@ class Issue extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date1', 'date2', 'book_id', 'client_id', 'employee_id'], 'required'],
-            [['date1', 'date2'], 'safe'],
+            [['date1', 'book_id', 'client_id', 'employee_id'], 'required'],
+            [['date1', 'date2', 'date3', 'condition', 'return_id'], 'safe'],
             [['book_id', 'client_id', 'employee_id'], 'default', 'value' => null],
             [['book_id', 'client_id', 'employee_id'], 'integer'],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
@@ -53,8 +53,10 @@ class Issue extends \yii\db\ActiveRecord
             'id' => 'ID',
             'date1' => 'Дата выдачы',
             'date2' => 'Срок выдачи',
+            'date3' => 'Дата возврата',
             'book_id' => 'Книга',
             'client_id' => 'Клиент',
+            'condition' => 'Состоянии книги',
             'employee_id' => 'Сотрудник',
         ];
     }
@@ -114,5 +116,9 @@ class Issue extends \yii\db\ActiveRecord
             $employees[$model->id] = $model->fio;
         });
         return $employees;
+    }
+
+    public function getReturnBook(){
+        return Issue::find()->where(['return_id' => $this->id])->orWhere(['id' => $this->return_id])->one();
     }
 }

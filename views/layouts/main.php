@@ -42,13 +42,17 @@ AppAsset::register($this);
             //['label' => 'About', 'url' => ['/site/about']],
             //['label' => 'Contact', 'url' => ['/site/contact']],
             !Yii::$app->user->isGuest ? (
-                ['label' => 'Book', 'url' => ['/book']]
+                ['label' => 'Книги', 'url' => ['/book']]
             ) : (''),
             !Yii::$app->user->isGuest ? (
-                ['label' => 'Employee', 'url' => ['/employee']]
+                ['label' => 'Сотрудники', 'url' => ['/employee']]
             ) : (''),
             !Yii::$app->user->isGuest ? (
-                ['label' => 'Client', 'url' => ['/client']]
+                ['label' => 'Клиенты', 'url' => ['/client']]
+            ) : (''),
+
+            !Yii::$app->user->isGuest ? (
+                ['label' => 'Выдача/Возрат', 'url' => ['/issue']]
             ) : (''),
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
