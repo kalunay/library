@@ -18,6 +18,10 @@ class Book extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+
     public static function tableName()
     {
         return 'book';
@@ -31,6 +35,7 @@ class Book extends \yii\db\ActiveRecord
         return [
             [['name', 'date', 'articul', 'autor'], 'required'],
             [['name', 'articul', 'autor'], 'string'],
+            [['status'], 'integer'],
             [['date'], 'safe'],
         ];
     }
@@ -46,6 +51,7 @@ class Book extends \yii\db\ActiveRecord
             'date' => 'Дата поступления',
             'articul' => 'Артикул',
             'autor' => 'Автор',
+            'status' => 'Статус'
         ];
     }
 }
