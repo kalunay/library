@@ -44,4 +44,15 @@ class Client extends \yii\db\ActiveRecord
             'passport' => 'Серия и номер паспорта',
         ];
     }
+
+    public function getBooks()
+    {
+        return $this->hasMany(Book::className(), ['id' => 'book_id'])->viaTable(Issue::tableName(), ['client_id' => 'id']);
+    }
+
+    public function getIssues()
+    {
+        return $this->hasMany(Issue::className(), ['client_id' => 'id']);
+    }
+
 }

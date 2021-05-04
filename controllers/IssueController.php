@@ -107,6 +107,10 @@ class IssueController extends Controller
                 $book->status = 0;
                 $book->save();
 
+                $issue = Issue::findOne(Yii::$app->request->post('Issue')['return_id']);
+                $issue->return_id = Yii::$app->request->post('Issue')['return_id'];
+                $issue->save();
+
                 return $this->redirect(['index']);
             }
 

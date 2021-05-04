@@ -9,6 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
+use app\models\Issue;
 
 /**
  * ClientController implements the CRUD actions for Client model.
@@ -118,6 +120,42 @@ class ClientController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionFilters()
+    {
+        $this->layout = false;
+
+        $searchModel = new ClientSearch();
+
+        $query = Client::find();
+
+        if(Yii::$app->request->get()['fio']){
+            $query->andFilterWhere(['ilike', 'fio', Yii::$app->request->get()['fio']]);
+        }
+
+        $issues = [];
+        $list = Issue::find()->all();
+        array_walk($list, function ($model) use (&$issues) {
+            $issues[] = $model->client_id;
+        });
+
+        if((int)Yii::$app->request->get()['status'] == 0){
+            $query->andWhere(['<>', 'id', $issues]);
+        }
+
+        if((int)Yii::$app->request->get()['status'] == 1){
+            $query->andWhere(['id' => $issues]);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('_filter', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel
+        ]);
     }
 
     /**
