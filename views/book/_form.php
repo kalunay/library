@@ -28,8 +28,8 @@ use kartik\date\DatePicker;
     <?= $form->field($model, 'autor')->textInput() ?>
 
     <?= $form->field($model, 'status')->dropDownList([
+        $model::STATUS_INACTIVE => 'В наличии',
         $model::STATUS_ACTIVE => 'На руках',
-        $model::STATUS_INACTIVE => 'В наличии'
     ]) ?>
 
     <div class="form-group">

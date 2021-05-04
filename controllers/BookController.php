@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\data\ActiveDataProvider;
 
 /**
  * BookController implements the CRUD actions for Book model.
@@ -23,7 +24,7 @@ class BookController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index', 'view', 'create', 'update', 'delete'],
+                'only' => ['index', 'view', 'create', 'update', 'delete', 'filters'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -118,6 +119,32 @@ class BookController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionFilters()
+    {
+        $this->layout = false;
+
+        $searchModel = new BookSearch();
+
+        $query = Book::find();
+
+        if(Yii::$app->request->get()['name']){
+            $query->andFilterWhere(['ilike', 'name', Yii::$app->request->get()['name']]);
+        }
+
+        if((int)Yii::$app->request->get()['status'] >= 0){
+            $query->andWhere(['status' => (int)Yii::$app->request->get()['status']]);
+        }
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->render('_filter', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel
+        ]);
     }
 
     /**
