@@ -133,8 +133,8 @@ class BookController extends Controller
             $query->andFilterWhere(['ilike', 'name', Yii::$app->request->get()['name']]);
         }
 
-        if((int)Yii::$app->request->get()['status'] >= 0){
-            $query->andWhere(['status' => (int)Yii::$app->request->get()['status']]);
+        if((int)Yii::$app->request->get()['status'] >= 1){
+            $query->andWhere(['status' => (int)Yii::$app->request->get()['status'] - 1]);
         }
 
         $dataProvider = new ActiveDataProvider([

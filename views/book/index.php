@@ -53,9 +53,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                     <div class="form-group">
                         <select class="form-control" name="status">
-                          <option value="">Выберите</option>
-                          <option value="0">В наличии</option>
-                          <option value="1">На руках</option>
+                          <option value="0">Выберите</option>
+                          <option value="1">В наличии</option>
+                          <option value="2">На руках</option>
                         </select>
                     </div>
                 </form>

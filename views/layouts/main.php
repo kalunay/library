@@ -12,8 +12,6 @@ use app\assets\AppAsset;
 
 AppAsset::register($this);
 
-$this->registerJsFile(Yii::$app->request->baseUrl.'/js/main.js',['depends' => [\yii\web\JqueryAsset::className()]]);
-
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

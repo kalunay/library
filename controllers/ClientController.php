@@ -140,11 +140,11 @@ class ClientController extends Controller
             $issues[] = $model->client_id;
         });
 
-        if((int)Yii::$app->request->get()['status'] == 0){
-            $query->andWhere(['<>', 'id', $issues]);
+        if((int)Yii::$app->request->get()['status'] == 1){
+            $query->andWhere(['not in', 'id', $issues]);
         }
 
-        if((int)Yii::$app->request->get()['status'] == 1){
+        if((int)Yii::$app->request->get()['status'] == 2){
             $query->andWhere(['id' => $issues]);
         }
 
